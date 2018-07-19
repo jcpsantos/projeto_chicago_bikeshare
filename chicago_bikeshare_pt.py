@@ -28,8 +28,8 @@ input("Aperte Enter para continuar...")
 # TAREFA 1
 # TODO: Imprima as primeiras 20 linhas usando um loop para identificar os dados.
 print("\n\nTAREFA 1: Imprimindo as primeiras 20 amostras")
-for i in range(21):
-    print(data_list[i])
+for indice in range(21):
+    print(data_list[indice])
 
 # Vamos mudar o data_list para remover o cabeçalho dele.
 data_list = data_list[1:]
@@ -42,8 +42,8 @@ input("Aperte Enter para continuar...")
 # TODO: Imprima o `gênero` das primeiras 20 linhas
 
 print("\nTAREFA 2: Imprimindo o gênero das primeiras 20 amostras")
-for i in range(20):
-    print(data_list[i][6]) 
+for indice in range(20):
+    print(data_list[indice][6]) 
 
 
 # Ótimo! Nós podemos pegar as linhas(samples) iterando com um for, e as colunas(features) por índices.
@@ -53,15 +53,16 @@ input("Aperte Enter para continuar...")
 # TAREFA 3
 # TODO: Crie uma função para adicionar as colunas(features) de uma lista em outra lista, na mesma ordem
 def column_to_list(data, index):
-    """Argumentos:
+    """Adiciona as colunas de uma lista em uma nova lista
+      Argumentos:
           data: Lista a ser verificada.
           index: Indice da coluna da lista.
       Retorna:
           Uma lista referente a coluna da lista."""
     column_list = []
     # Dica: Você pode usar um for para iterar sobre as amostras, pegar a feature pelo seu índice, e dar append para uma lista
-    for i in range(len(data_list)):
-        column_list.append(data_list[i][index]) 
+    for indice in range(len(data_list)):
+        column_list.append(data_list[indice][index])                    
     return column_list
 
 
@@ -82,10 +83,10 @@ input("Aperte Enter para continuar...")
 male = 0
 female = 0
 nogenero = 0
-for i in range(len(data_list)):
-    if (column_to_list(data_list, -2)[i] == "Male"):
+for indice in range(len(data_list)):
+    if (column_to_list(data_list, -2)[indice] == "Male"):
         male += 1
-    elif (column_to_list(data_list, -2)[i] == "Female"):
+    elif (column_to_list(data_list, -2)[indice] == "Female"):
         female += 1
     else:
         nogenero += 1    
@@ -105,17 +106,18 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função para contar os gêneros. Retorne uma lista.
 # Isso deveria retornar uma lista com [count_male, count_female] (exemplo: [10, 15] significa 10 Masculinos, 15 Femininos)
 def count_gender(data_list):
-    """Argumentos:
+    """Conta os gêneros e retorna em uma lista
+      Argumentos:
           data_list: Lista a ser verificada.
       Retorna:
           Uma lista com a quantidade de cada gênero na lista."""
     male = 0
     female = 0
     nogenero = 0
-    for i in range(len(data_list)):
-        if (column_to_list(data_list, -2)[i] == "Male"):
+    for indice in range(len(data_list)):
+        if (column_to_list(data_list, -2)[indice] == "Male"):
             male += 1
-        elif (column_to_list(data_list, -2)[i] == "Female"):
+        elif (column_to_list(data_list, -2)[indice] == "Female"):
             female += 1
         else:
             nogenero += 1  
@@ -137,17 +139,18 @@ input("Aperte Enter para continuar...")
 # TODO: Crie uma função que pegue o gênero mais popular, e retorne este gênero como uma string.
 # Esperamos ver "Masculino", "Feminino", ou "Igual" como resposta.
 def most_popular_gender(data_list):
-     """Argumentos:
+    """Mostra qual é o gênero mais popular na lista(amostragem)
+      Argumentos:
           data_list: Lista a ser verificada.
       Retorna:
           Uma string informando qual o dado mais popular na lista."""
     answer = ""
-    if male > female:
+    if count_gender(data_list)[0] > count_gender(data_list)[1]:
         answer = "Masculino"
-    elif male < female:
+    elif count_gender(data_list)[0] < count_gender(data_list)[1]:
         answer = "Feminino"
     else:
-        answer = "Igual"  
+        answer = "Igual"        
     return answer
 
 
@@ -176,21 +179,22 @@ input("Aperte Enter para continuar...")
 # TODO: Crie um gráfico similar para user_types. Tenha certeza que a legenda está correta.
 print("\nTAREFA 7: Verifique o gráfico!")
 def count_user_types(data_list):
-    """Argumentos:
+    """Conta os tipos de usuários e retorna em uma lista
+      Argumentos:
           data_list: Lista a ser verificada.
       Retorna:
           Uma lista com a quantidade de cada tipo de usuário na lista."""
     customer = 0
     subscriber = 0
     nogenero = 0
-    for i in range(len(data_list)):
-        if (column_to_list(data_list, -3)[i] == "Customer"):
+    for indice in range(len(data_list)):
+        if (column_to_list(data_list, -3)[indice] == "Customer"):
             customer += 1
-        elif (column_to_list(data_list, -3)[i] == "Subscriber"):
+        elif (column_to_list(data_list, -3)[indice] == "Subscriber"):
             subscriber += 1
         else:
             nogenero += 1  
-    return [customer, subscriber]   
+    return [customer, subscriber]
 
 user_types_list = column_to_list(data_list, -3)
 types = ["Cliente", "Assinante"]
@@ -242,14 +246,13 @@ mean_trip = 0.
 median_trip = 0.
 total = 0
 float_trip = []
-for i in range(len(data_list)):
-    if (float(trip_duration_list[i]) > max_trip):
-        max_trip = float(trip_duration_list[i])
-    elif (float(trip_duration_list[i]) < min_trip):
-        min_trip = float(trip_duration_list[i])
-    total+=float(trip_duration_list[i])
-    print(total)
-    float_trip.append(float(trip_duration_list[i]))
+for indice in range(len(data_list)):
+    if (float(trip_duration_list[indice]) > max_trip):
+        max_trip = float(trip_duration_list[indice])
+    elif (float(trip_duration_list[indice]) < min_trip):
+        min_trip = float(trip_duration_list[indice])
+    total+=float(trip_duration_list[indice])
+    float_trip.append(float(trip_duration_list[indice]))
     
 mean_trip = total / len(trip_duration_list)
 float_trip.sort()
@@ -288,15 +291,12 @@ input("Aperte Enter para continuar...")
 # TAREFA 11
 # Volte e tenha certeza que você documenteou suas funções. Explique os parâmetros de entrada, a saída, e o que a função faz. Exemplo:
 # def new_function(param1: int, param2: str) -> list:
-      """
-      Função de exemplo com anotações.
-      Argumentos:
-          param1: O primeiro parâmetro.
-          param2: O segundo parâmetro.
-      Retorna:
-          Uma lista de valores x.
-
-      """
+"""Função de exemplo com anotações.
+    Argumentos:
+        param1: O primeiro parâmetro.
+        param2: O segundo parâmetro.
+    Retorna:
+        Uma lista de valores x."""
 
 input("Aperte Enter para continuar...")
 # TAREFA 12 - Desafio! (Opcional)
@@ -306,7 +306,8 @@ print("Você vai encarar o desafio? (yes ou no)")
 answer = "yes"
 
 def count_items(column_list):
-     """ Argumentos:
+    """Conta os tipos de usuários (dados) na lista
+    Argumentos:
         column_list: Lista referente a coluna selecionada.
     Retorna:
         Duas listas uma informando os tipos e outra informando a quantidade."""
@@ -314,12 +315,12 @@ def count_items(column_list):
     count_items = []
     itens = set(column_list)
     total_item = 0
-    for i in itens:
-        item_types.append(i)
+    for indice in itens:
+        item_types.append(indice)
 
-    for i in range(len(item_types)):
-        for indice in range(len(column_list)):
-            if item_types[i] == column_list[indice]:
+    for i_item_type in range(len(item_types)):
+        for i_column_list in range(len(column_list)):
+            if item_types[i_item_type] == column_list[i_column_list]:
                 total_item += 1
         count_items.append(total_item)
         total_item = 0      
