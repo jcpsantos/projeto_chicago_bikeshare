@@ -41,8 +41,8 @@ input("Aperte Enter para continuar...")
 # TODO: Imprima o `gênero` das primeiras 20 linhas
 
 print("\nTAREFA 2: Imprimindo o gênero das primeiras 20 amostras")
-for indice in range(20):
-    print(data_list[indice][6]) 
+for line in data_list[:20]:
+    print(line[6])
 
 # Ótimo! Nós podemos pegar as linhas(samples) iterando com um for, e as colunas(features) por índices.
 # Mas ainda é difícil pegar uma coluna em uma lista. Exemplo: Lista com todos os gêneros
@@ -80,10 +80,11 @@ input("Aperte Enter para continuar...")
 male = 0
 female = 0
 nogenero = 0
-for indice in range(len(data_list)):
-    if (column_to_list(data_list, -2)[indice] == "Male"):
+genders_list = column_to_list(data_list,-2)
+for gender in genders_list:
+    if gender == "Male":
         male += 1
-    elif (column_to_list(data_list, -2)[indice] == "Female"):
+    elif gender == "Female":
         female += 1
     else:
         nogenero += 1    
@@ -141,9 +142,10 @@ def most_popular_gender(data_list):
       Retorna:
           Uma string informando qual o dado mais popular na lista."""
     answer = ""
-    if count_gender(data_list)[0] > count_gender(data_list)[1]:
+    male, female = count_gender(data_list)
+    if male > female:
         answer = "Masculino"
-    elif count_gender(data_list)[0] < count_gender(data_list)[1]:
+    elif male < female:
         answer = "Feminino"
     else:
         answer = "Igual"        
@@ -244,6 +246,7 @@ mean_trip = 0.
 median_trip = 0.
 total = 0
 float_trip = []
+#Retornar o maior e o menor na lista
 for indice in range(len(data_list)):
     if (float(trip_duration_list[indice]) > max_trip):
         max_trip = float(trip_duration_list[indice])
@@ -251,8 +254,9 @@ for indice in range(len(data_list)):
         min_trip = float(trip_duration_list[indice])
     total+=float(trip_duration_list[indice])
     float_trip.append(float(trip_duration_list[indice]))
-    
+#Encontrar a média da lista    
 mean_trip = total / len(trip_duration_list)
+#Retornar a mediana da lista
 float_trip.sort()
 if len(float_trip) % 2 == 0:                                                                      
     n = len(float_trip)                                                                           
@@ -307,12 +311,9 @@ def count_items(column_list):
         column_list: Lista referente a coluna selecionada.
     Retorna:
         Duas listas uma informando os tipos e outra informando a quantidade."""
-    item_types = []
+    item_types = list(set(column_list))
     count_items = []
-    itens = set(column_list)
     total_item = 0
-    for indice in itens:
-        item_types.append(indice)
 
     for i_item_type in range(len(item_types)):
         for i_column_list in range(len(column_list)):
